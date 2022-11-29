@@ -2,12 +2,9 @@ package com.enestesea.ideplugin.project;
 
 import com.enestesea.ideplugin.Gui.Danila;
 import com.intellij.openapi.components.Service;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -32,7 +29,7 @@ public final class DanilaService {
         return lst.get(randNumber);
     }
 
-    public Danila display(){
-        return new Danila();
+    public void display(){
+        Danila.main();
     }
 }

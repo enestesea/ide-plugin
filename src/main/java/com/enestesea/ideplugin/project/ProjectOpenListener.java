@@ -15,7 +15,8 @@ public class ProjectOpenListener implements ProjectManagerListener {
             return;
         }
         DanilaService service = ApplicationManager.getApplication().getService(DanilaService.class);
-        Messages.showMessageDialog(service.display(), "Danila", "AAAAA", Messages.getInformationIcon());
+        service.display();
+        //Messages.showMessageDialog(service.display(), "Danila", "AAAAA", Messages.getInformationIcon());
     }
 
 }

@@ -2,87 +2,53 @@ package com.enestesea.ideplugin.Gui;
 
 import com.enestesea.ideplugin.project.DanilaService;
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.ui.JBColor;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.awt.* ;
 
-public class Danila extends JDialog {
-    private JPanel contentPane;
-    private JButton buttonOK;
-    private JButton buttonCancel;
-    private JLabel image;
+import javax.swing.* ;
+
+public class Danila extends JFrame {
 
     public Danila() {
-        setContentPane(contentPane);
-        setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
+        super() ;
+        setTitle( "Danilka" ) ;
+        setContentPane( new MyPanel() ) ;
+        setSize( 1000 , 1000 ) ;
+        setVisible( true ) ;
+    }
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
+    public class MyPanel extends JPanel {
+        private Image img ;
+        public MyPanel() {
+            setLayout( new BorderLayout() ) ;
+            img = ApplicationManager.getApplication().getService(DanilaService.class).getRandomDanilaImage();
+            if( img == null ) {
+                System.out.println( "Image is null" );
+                System.exit( 1 ) ;
             }
-        });
-
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
+            if( img.getHeight(this) <= 0 || img.getWidth( this ) <= 0 ) {
+                System.out.println( "Image width or height must be +ve" );
+                System.exit( 2 ) ;
             }
-        });
-
-        // call onCancel() when cross is clicked
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                onCancel();
+        }
+        public void drawBackground( Graphics g ) {
+            int w = getWidth() ;
+            int h = getHeight() ;
+            int iw = img.getWidth( this ) ;
+            int ih = img.getHeight( this ) ;
+            for( int i = 0 ; i < w ; i+=iw ) {
+                for( int j = 0 ; j < h ; j+= ih ) {
+                    g.drawImage( img , i , j , this ) ;
+                }
             }
-        });
-
-        // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-
-        BufferedImage tempImage;
-
-        tempImage = ApplicationManager.getApplication().getService(DanilaService.class).getRandomDanilaImage();
-
-        image = new JLabel(new ImageIcon(tempImage));
-        image.setForeground(JBColor.LIGHT_GRAY);
-        image.setBackground(JBColor.LIGHT_GRAY);
-        image.setOpaque(true);
-        this.contentPane.add(image);
-        this.validate();
+        }
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            drawBackground( g ) ;
+        }
     }
 
-
-    private void onOK() {
-        // add your code here
-        dispose();
+    public static void main() {
+        new Danila();
     }
-
-    private void onCancel() {
-        // add your code here if necessary
-        dispose();
-    }
-
-    public JPanel getContent(){
-        return contentPane;
-    }
-
-    public static void main(String[] args) {
-        Danila dialog = new Danila();
-        BufferedImage tempImage;
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
-    }
-
 }

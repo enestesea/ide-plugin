@@ -13,7 +13,7 @@ public class Danila extends JFrame {
         super() ;
         setTitle( "Danilka" ) ;
         setContentPane( new MyPanel() ) ;
-        setSize( 1000 , 1000 ) ;
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible( true ) ;
     }
 

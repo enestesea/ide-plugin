@@ -30,4 +30,10 @@
     <applicationListeners>
         <listener class="com.enestesea.ideplugin.project.ProjectOpenListener" topic="com.intellij.openapi.project.ProjectManagerListener"/>
     </applicationListeners>
+    <actions>
+        <action id="com.enestesea.ideplugin.project.ShowAction" class="com.enestesea.ideplugin.project.ShowAction"
+                text="Show Action" description="Shows the picture by using hotkey">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl BACK_SLASH" second-keystroke="ctrl D"/>
+        </action>
+    </actions>
 </idea-plugin>
